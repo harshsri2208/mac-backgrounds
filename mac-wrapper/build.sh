@@ -10,6 +10,13 @@ RESOURCES_DIR="$APP_DIR/Contents/Resources"
 
 echo "🎨 Building React web bundle..."
 cd ..
+
+# Ensure dependencies are installed before building
+if [ ! -d "node_modules" ]; then
+    echo "📦 Installing npm dependencies..."
+    npm install
+fi
+
 npm run build
 cd mac-wrapper
 
