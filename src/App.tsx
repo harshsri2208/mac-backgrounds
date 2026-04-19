@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, useSearchParams } from 'react-router-dom';
+import { HashRouter, Routes, Route, useSearchParams } from 'react-router-dom';
 import BackgroundRenderer from './components/BackgroundRenderer';
 import ControlsOverlay from './components/ControlsOverlay';
 import AmbientAudio from './components/AmbientAudio';
@@ -68,11 +68,11 @@ function Workspace() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="*" element={<Workspace />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

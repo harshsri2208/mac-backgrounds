@@ -45,7 +45,24 @@ export default function ControlsOverlay({ config, onChange, urlForPlash, soundEn
     { id: 'fire', label: 'Fire' },
   ];
 
+  const inMacApp = typeof window !== 'undefined' && !!(window as any).webkit?.messageHandlers?.liveToonMessage;
+
   const handleCopy = () => {
+    if (inMacApp) {
+      // Build the exact Hash url format needed for HashRouter
+      const hashParams = new URLSearchParams(window.location.hash.replace(/^#\/?/, ''));
+      hashParams.set('plash', 'true');
+      const hashString = '#/?' + hashParams.toString();
+
+      (window as any).webkit.messageHandlers.liveToonMessage.postMessage({
+        action: "setWallpaper",
+        hash: hashString
+      });
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+      return;
+    }
+
     navigator.clipboard.writeText(urlForPlash);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -118,19 +135,21 @@ export default function ControlsOverlay({ config, onChange, urlForPlash, soundEn
             {/* Footer Controls */}
             <div className="flex justify-between items-center shrink-0">
               <div className="flex gap-3">
-                <button 
-                  onClick={() => setShowInstructions(true)}
-                  className="px-4 py-2 rounded-md bg-[rgba(0,0,0,0.05)] text-[var(--text-main)] text-[13px] font-medium hover:bg-[rgba(0,0,0,0.1)] flex items-center gap-2 transition cursor-pointer"
-                >
-                  <MonitorDown size={14} /> Setup
-                </button>
+                {!inMacApp && (
+                  <button 
+                    onClick={() => setShowInstructions(true)}
+                    className="px-4 py-2 rounded-md bg-[rgba(0,0,0,0.05)] text-[var(--text-main)] text-[13px] font-medium hover:bg-[rgba(0,0,0,0.1)] flex items-center gap-2 transition cursor-pointer"
+                  >
+                    <MonitorDown size={14} /> Setup
+                  </button>
+                )}
               </div>
               <button 
                 onClick={handleCopy}
                 className="px-6 py-2.5 rounded-md bg-[var(--accent-blue)] text-white text-[13px] font-medium hover:opacity-90 shadow flex items-center gap-2 transition cursor-pointer"
               >
                 {copied ? <Check size={16} /> : <Copy size={16} />}
-                {copied ? "URL Copied!" : "Set as Wallpaper"}
+                {copied ? (inMacApp ? "Applied!" : "URL Copied!") : "Set as Wallpaper"}
               </button>
             </div>
           </div>
