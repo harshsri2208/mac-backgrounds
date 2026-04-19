@@ -241,9 +241,16 @@ export default function ControlsOverlay({ config, onChange, urlForPlash, soundEn
               <ol className="list-decimal pl-4 space-y-3 text-[var(--text-sub)] mb-6 text-sm">
                 <li>Design your scene and sound (it auto-loops forever).</li>
                 <li>Click <strong>Set as Wallpaper</strong> to copy your unique URL.</li>
-                <li>Download <a href="https://sindresorhus.com/plash" target="_blank" rel="noopener noreferrer" className="text-[var(--accent-blue)] inline-flex items-center gap-1 hover:underline font-medium">Plash <ExternalLink size={12}/></a>, a free Mac app.</li>
-                <li>Open Plash from your menu bar and select "Add Website..."</li>
-                <li>Paste the URL and finish!</li>
+                <li>Open your Terminal and build our native Mac wrapper:
+                    <div className="bg-slate-100 p-2 mt-1 rounded text-xs break-all font-mono">
+                      cd mac-wrapper && chmod +x build.sh && ./build.sh
+                    </div>
+                </li>
+                <li>Launch the background process using your URL:
+                    <div className="bg-slate-100 p-2 mt-1 rounded text-xs break-all font-mono">
+                      open LiveToon.app --args "&lt;Paste URL&gt;"
+                    </div>
+                </li>
               </ol>
               <div className="bg-slate-50 p-4 rounded-xl border border-[var(--border-color)] flex items-center gap-3 text-xs text-slate-500 mb-6 break-all">
                 {urlForPlash}

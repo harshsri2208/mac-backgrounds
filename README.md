@@ -1,6 +1,6 @@
 # 🎨 LiveToon: Animated Mac Wallpapers
 
-A sleek, procedural cartoon background generator built with React. Design endless, perfectly looping animated scenes and seamlessly set them as your true macOS desktop wallpaper.
+A sleek, procedural cartoon background generator built with React. Design endless, perfectly looping animated scenes and seamlessly set them as your true macOS desktop wallpaper using our included lightweight native wrapper!
 
 ## ✨ Features
 
@@ -9,7 +9,7 @@ A sleek, procedural cartoon background generator built with React. Design endles
 - **Deep Customization:** Tweak animation direction, speed, complexity, color hue, and saturation.
 - **Ambient Audio:** Integrated procedural sound engine with winds, bubbling water, deep space drones, and crackling fire.
 - **macOS-Native Feel:** A frosted-glass, three-pane interface designed to feel like a native Mac utility.
-- **Plash Integration:** One-click URL generation specially formatted to hide the UI and run natively on your desktop.
+- **Native Mac Wrapper Included:** A standalone, tiny Swift app is included in the `./mac-wrapper` directory so you can run your wallpapers smoothly at the native OS desktop level!
 
 ## 🚀 Local Setup & Development
 
@@ -41,14 +41,25 @@ This app is built using **React 19**, **Vite**, **Tailwind CSS v4**, and **Motio
 
 ## 🖥️ Setting as your Mac Desktop
 
-macOS doesn't support live websites as wallpapers out of the box. To bridge this gap, we use an incredible open-source tool called Plash.
+macOS doesn't support live websites as wallpapers out of the box. To bridge this gap, we've included a tiny, native Mac wrapper specifically designed for this app.
 
 1. Configure your perfect scene and sound using the LiveToon interface in your browser.
-2. Click the **"Set as Wallpaper"** button in the bottom right. This copies a unique URL to your clipboard containing all your settings.
-3. Download [Plash](https://sindresorhus.com/plash) (Free & Open Source).
-4. Open Plash, click **"Add Website..."**, and paste your generated URL.
-    * *Note: The copied URL includes a hidden `?plash=true` flag that completely removes the UI components, leaving only the pure animation.*
-5. Enjoy your new living desktop!
+2. Click the **"Set as Wallpaper"** button in the bottom right to copy your configuration URL.
+3. Open a new terminal and navigate to the native wrapper folder:
+   ```bash
+   cd mac-wrapper
+   ```
+4. Build the wrapper locally (requires no setup, Macs can compile Swift out of the box!):
+   ```bash
+   chmod +x build.sh
+   ./build.sh
+   ```
+5. Launch the wallpaper using the URL you copied earlier:
+   ```bash
+   open LiveToon.app --args "PASTE_YOUR_COPIED_URL_HERE"
+   ```
+
+To quit the wallpaper at any time, click the 🎨 icon in your Mac menu bar and select **Quit**.
 
 ## 🛠️ Tech Stack
 
@@ -57,6 +68,7 @@ macOS doesn't support live websites as wallpapers out of the box. To bridge this
 - **Tailwind CSS** - Styling and layout
 - **Motion (Framer Motion)** - Canvas element animations
 - **Web Audio API** - Procedural ambient sound synthesis
+- **Swift / AppKit** - macOS Desktop Level window wrapper
 
 ## 📄 License
 
